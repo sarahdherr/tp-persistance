@@ -6,7 +6,6 @@ var nunjucks = require('nunjucks');
 var db = require('./models');
 var router = require('./routes');
 
-
 var app = express();
 
 nunjucks.configure('views', {noCache:true})
