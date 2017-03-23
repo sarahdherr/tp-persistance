@@ -65,8 +65,23 @@ $(function initializeMap() {
     return marker
   }
 
+
   // 0. Fetch the database, parsed from json to a js object
-  const db = fetch('/api').then(r => r.json())
+
+  // const db = fetch('/api').then((r) => {
+  //   console.log('**FETCH**', r);
+  //   r.json();
+  // });
+
+  const db = $.ajax({
+    method: 'GET',
+    url: '/api'
+  })
+  .then((data) => {
+    console.log('**FETCH**', data);
+    return data;
+  })
+  .catch();
 
   // TODO:
   // 1. Populate the <select>s with <option>s

@@ -66,13 +66,20 @@ router.get('/', function(req, res, next) {
 // 			.catch(next))
 
 router.get('/api', function(req, res, next) {
-	Promise.props({
-		hotels: Hotel.findAll({ include: [Place] }),
-		restaurants: Restaurant.findAll({ include: [Place] }),
-		activities: Activity.findAll({ include: [Place] })
+	Promise.all([
+		Hotel.findAll({ include: [Place] }),
+		Restaurant.findAll({ include: [Place] }),
+		Activity.findAll({ include: [Place] })
+	])
+		.spread((hotels, restaurants, activities)  => {
+			console.log('*******', hotels, restaurants, activities);
+			res.json({
+				hotels: hotels,
+				restaurants: restaurants,
+				activities: activities
+			});
 	})
-		.then(data => res.json(data))
-		.catch(next)
+		.catch(next);
 });
 
 router.get('/api/hotels', function(req, res, next) {
@@ -80,7 +87,7 @@ router.get('/api/hotels', function(req, res, next) {
 		hotels: Hotel.findAll({ include: [Place] })
 	})
 		.then(data => res.json(data))
-		.catch(next)
+		.catch(next);
 });
 
 router.get('/api/restaurants', function(req, res, next) {

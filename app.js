@@ -29,7 +29,7 @@ app.use(function(err, req, res, next) {
 	res.send(err, err.stack)
 })
 
-db.sync({force:true})
+db.sync()
 	.then(function(){
 		console.log('db synced');
 		app.listen(3000, function(){
