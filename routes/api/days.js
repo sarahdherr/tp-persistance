@@ -13,7 +13,7 @@ var Day = db.model('day');
 router.get('/', function (req, res, next) {
 	// find all days
 	Day.findAll().then(function(days){
-		res.send(days)
+		res.send(days);
 	})
 
 })
@@ -32,7 +32,13 @@ router.delete('/:id', function (req, res, next) {
 })
 
 router.post('/:id', function (req, res, next) {
-	res.send("You created a day");
+	// res.send("You created a day");
+	Day.create({
+		number: req.params.id
+	})
+	.then(function(day) {
+		res.send(day);
+	})
 })
 
 
