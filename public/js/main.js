@@ -27,12 +27,12 @@ $(function initializeMap () {
       featureType: 'road.highway',
       elementType: 'geometry.fill',
       stylers: [{ color: '#ef8c25' }, { lightness: 40 }]
-    }, 
+    },
     {
       featureType: 'road.highway',
       elementType: 'geometry.stroke',
       stylers: [{ visibility: 'off' }]
-    }, 
+    },
     {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
@@ -68,7 +68,7 @@ $(function initializeMap () {
   // 0. Fetch the database, parsed from json to a js object
   const db = fetch('/api').then(r => r.json())
 
-  // TODO: 
+  // TODO:
   // 1. Populate the <select>s with <option>s
   $('select').each(
     (_index, select) => {
@@ -90,7 +90,7 @@ $(function initializeMap () {
   // dataset item instead:
   //
   //   $('button[data-action="add"]').click(
-  $('button.add').click(    
+  $('button.add').click(
     evt =>
       $(evt.target.dataset.from)
         .find('option:selected')
@@ -120,19 +120,19 @@ $(function initializeMap () {
   )
 
   // 4. Deal with adding days
-  $('button.addDay').click(
-    evt => {
-      // Deselect all days
-      $('.day.current').removeClass('current')
-      
-      // Add a new day
-      $(evt.target).before(
-        $(`<ol class="current day"><h3><span class=day-head></span><button class=delDay>x</button></h3></ol>`)
-      )
+  // $('button.addDay').click(
+  //   evt => {
+  //     // Deselect all days
+  //     $('.day.current').removeClass('current')
 
-      numberDays()
-    }
-  )
+  //     // Add a new day
+  //     $(evt.target).before(
+  //       $(`<ol class="current day"><h3><span class=day-head></span><button class=delDay>x</button></h3></ol>`)
+  //     )
+
+  //     numberDays()
+  //   }
+  // )
 
   function numberDays() {
     $('.day').each((index, day) =>
@@ -146,7 +146,7 @@ $(function initializeMap () {
       $('.day.current').removeClass('current')
       const $day = $(evt.target).closest('.day')
 
-      $('li').each((_i, li) => li.marker && li.marker.setMap(null))      
+      $('li').each((_i, li) => li.marker && li.marker.setMap(null))
       $day.addClass('current')
       $day.find('li').each((_i, li) => li.marker.setMap(currentMap))
     }
@@ -163,11 +163,40 @@ $(function initializeMap () {
         $(prev || next).addClass('current')
       }
 
-      $day.find('li').each((_i, li) => li.marker.setMap(currentMap))      
+      $day.find('li').each((_i, li) => li.marker.setMap(currentMap))
       $day.remove()
       numberDays()
     })
 
   // When we start, add a day
   $('button.addDay').click()
+
+
+
+
+});
+
+$(function runMap() {
+
+$(document).on('click', 'button.addDay', function() {
+  $.ajax({
+  method: 'GET',
+  url: '/api/days'
+  })
+  .then(function (data) { console.log('GET response data: ', data) })
+  .catch(console.error.bind(console));
+
+  $.ajax({
+    method: 'POST',
+    url: '/api/days'
+    })
+    .then(function (data) { console.log('POST response data: ', data) })
+    .catch(console.error.bind(console));
+
+
+  });
+
+
+
+
 });

@@ -12,8 +12,15 @@ var Day = db.model('day');
 
 router.get('/', function(req, res, next) {
 	// find all days
-	res.send(console.log("get all days"));
+  var m = "get all days";
+  console.log(m, "!!!!!!")
+	res.send(m);
 
+})
+
+// Need a seperate post from the /:id below; doen't catch there.
+router.post('/', function(req, res, next) {
+  res.send("You created a day");
 })
 
 router.get('/:id', function(req, res, next) {
@@ -25,11 +32,11 @@ router.delete('/:id', function(req, res, next) {
 })
 
 router.post('/:id', function(req, res, next) {
-	// create a new day	
+	res.send("You created a day");
 })
 
 
-// get attractions of that type for a specific day 
+// get attractions of that type for a specific day
 router.post('/:id/hotels', function(req, res, next) {
 
 })
