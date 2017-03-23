@@ -31,10 +31,10 @@ router.delete('/:id', function (req, res, next) {
 	// delete a day by id
 })
 
-router.post('/:id', function (req, res, next) {
+router.post('/:number', function (req, res, next) {
 	// res.send("You created a day");
 	Day.create({
-		number: req.params.id
+		number: req.params.number
 	})
 	.then(function(day) {
 		res.send(day);

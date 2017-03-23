@@ -185,6 +185,11 @@ $(function initializeDay() {
       .then(function (data) { console.log('GET response data: ', data) })
       .catch(console.error.bind(console));
 
+      // select the number of day we want to make
+      console.log($('.addDay').prev('ol')[0]);
+      var dayNumber = +$('.addDay').prev('ol')[0].id + 1;
+      console.log('When addDay, new day Num', dayNumber);
+
     $.ajax({
       method: 'POST',
       url: '/api/days'
@@ -192,7 +197,7 @@ $(function initializeDay() {
       .then(function (data) { console.log('POST response data: ', data) })
       .catch(console.error.bind(console));
   });
-  
+
   $.ajax({
     method: 'GET',
     url: '/api/days'
@@ -205,9 +210,9 @@ $(function initializeDay() {
           method: 'POST',
           url: '/api/days/1'
         })
-          .then(function (day) { 
-            console.log('Day One now exists', day) 
-            $newDay = $(`<ol class="current day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
+          .then(function (day) {
+            console.log('Day One now exists', day)
+            $newDay = $(`<ol id=${ day.number } class="current day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
             $('.addDay').before($newDay);
           })
           .catch(console.error.bind(console));
