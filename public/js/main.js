@@ -136,7 +136,7 @@ $(function initializeMap() {
 
   function numberDays() {
     $('.day').each((index, day) =>
-      $(day).find('.day-head').text(`day ${index + 1}`)
+      $(day).find('.day-head').text(`Day ${index + 1}`)
     )
   }
 
@@ -156,6 +156,7 @@ $(function initializeMap() {
   $(document).on('click', 'button.delDay',
     evt => {
       const $day = $(evt.target).closest('.day')
+      const dayNumber = $day[0].id;
       if ($day.hasClass('current')) {
         const prev = $day.prev('.day')[0]
           , next = $day.next('.day')[0]
@@ -165,6 +166,14 @@ $(function initializeMap() {
 
       $day.find('li').each((_i, li) => li.marker.setMap(currentMap))
       $day.remove()
+      var dayUrl = '/api/days/' + dayNumber;
+      $.ajax({
+        method: 'DELETE',
+        url: dayUrl
+      })
+      .then(function(message) {
+        console.log(message);
+      })
       numberDays()
     })
 
@@ -196,7 +205,13 @@ $(function initializeDay() {
     })
       .then(function (data) {
         console.log('POST response data: ', data)
-        renderDays([data])
+        $.ajax({
+          method: 'GET',
+          url: '/api/days'
+        })
+          .then(function(days) {
+            renderDays(days);
+          })
       })
 
       .catch(console.error.bind(console));
@@ -228,10 +243,15 @@ $(function initializeDay() {
     })
 
   function renderDays(days) {
+    $($(".addDay").siblings()).remove();
+
     days.forEach(function (day) {
-      $newDay = $(`<ol id=${day.number} ><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
+      $newDay = $(`<ol id=${day.number} class="day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
       $('.addDay').before($newDay);
     })
+
+    // add current class to last day
+    $($('.addDay').prev('ol')[0]).addClass('current');
   }
 
 

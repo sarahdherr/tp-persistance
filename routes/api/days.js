@@ -29,6 +29,14 @@ router.get('/:number', function (req, res, next) {
 
 router.delete('/:number', function (req, res, next) {
 	// delete a day by id
+	Day.findOne({
+		where: {
+			number: req.params.number
+		}
+	})
+	.then(function(day) {
+		day.destroy();
+	})
 })
 
 router.post('/:number', function (req, res, next) {
