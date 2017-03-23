@@ -185,16 +185,20 @@ $(function initializeDay() {
       .then(function (data) { console.log('GET response data: ', data) })
       .catch(console.error.bind(console));
 
-      // select the number of day we want to make
-      console.log($('.addDay').prev('ol')[0]);
-      var dayNumber = +$('.addDay').prev('ol')[0].id + 1;
-      console.log('When addDay, new day Num', dayNumber);
-
+    // select the number of day we want to make
+    console.log($('.addDay').prev('ol')[0]);
+    var dayNumber = +$('.addDay').prev('ol')[0].id + 1;
+    console.log('When addDay, new day Num', dayNumber);
+    var newUrl = '/api/days/' + dayNumber;
     $.ajax({
       method: 'POST',
-      url: '/api/days'
+      url: newUrl
     })
-      .then(function (data) { console.log('POST response data: ', data) })
+      .then(function (data) {
+        console.log('POST response data: ', data)
+        renderDays([data])
+      })
+
       .catch(console.error.bind(console));
   });
 
@@ -212,7 +216,7 @@ $(function initializeDay() {
         })
           .then(function (day) {
             console.log('Day One now exists', day)
-            $newDay = $(`<ol id=${ day.number } class="current day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
+            $newDay = $(`<ol id=${day.number} class="current day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
             $('.addDay').before($newDay);
           })
           .catch(console.error.bind(console));
@@ -223,12 +227,12 @@ $(function initializeDay() {
       }
     })
 
-    function renderDays(days) {
-      days.forEach(function(day) {
-        $newDay = $(`<ol class="current day"><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
-        $('.addDay').before($newDay);
-      })
-    }
+  function renderDays(days) {
+    days.forEach(function (day) {
+      $newDay = $(`<ol id=${day.number} ><h3><span class=day-head>Day ${day.number}</span><button class=delDay>x</button></h3></ol>`)
+      $('.addDay').before($newDay);
+    })
+  }
 
 
 });

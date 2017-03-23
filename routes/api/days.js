@@ -23,11 +23,11 @@ router.post('/', function (req, res, next) {
 	res.send("You created a day");
 })
 
-router.get('/:id', function (req, res, next) {
+router.get('/:number', function (req, res, next) {
 	// find day by id
 })
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:number', function (req, res, next) {
 	// delete a day by id
 })
 
@@ -43,15 +43,15 @@ router.post('/:number', function (req, res, next) {
 
 
 // get attractions of that type for a specific day
-router.post('/:id/hotels', function (req, res, next) {
+router.post('/:number/hotels', function (req, res, next) {
 
 })
 
-router.post('/:id/restaurants', function (req, res, next) {
+router.post('/:number/restaurants', function (req, res, next) {
 
 })
 
-router.post('/:id/activities', function (req, res, next) {
+router.post('/:number/activities', function (req, res, next) {
 
 })
 
