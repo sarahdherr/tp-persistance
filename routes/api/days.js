@@ -10,42 +10,42 @@ var Activity = db.model('activity');
 var Place = db.model('place');
 var Day = db.model('day');
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 	// find all days
-  var m = "get all days";
-  console.log(m, "!!!!!!")
-	res.send(m);
+	Day.findAll().then(function(days){
+		res.send(days)
+	})
 
 })
 
 // Need a seperate post from the /:id below; doen't catch there.
-router.post('/', function(req, res, next) {
-  res.send("You created a day");
+router.post('/', function (req, res, next) {
+	res.send("You created a day");
 })
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
 	// find day by id
 })
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', function (req, res, next) {
 	// delete a day by id
 })
 
-router.post('/:id', function(req, res, next) {
+router.post('/:id', function (req, res, next) {
 	res.send("You created a day");
 })
 
 
 // get attractions of that type for a specific day
-router.post('/:id/hotels', function(req, res, next) {
+router.post('/:id/hotels', function (req, res, next) {
 
 })
 
-router.post('/:id/restaurants', function(req, res, next) {
+router.post('/:id/restaurants', function (req, res, next) {
 
 })
 
-router.post('/:id/activities', function(req, res, next) {
+router.post('/:id/activities', function (req, res, next) {
 
 })
 

@@ -1,4 +1,4 @@
-$(function initializeMap () {
+$(function initializeMap() {
 
   const fullstackAcademy = new google.maps.LatLng(40.705086, -74.009151);
 
@@ -55,7 +55,7 @@ $(function initializeMap () {
   //   activity: '/images/star-3.png'
   // };
 
-  function drawMarker (type, coords) {
+  function drawMarker(type, coords) {
     // TODO: Pan map / recalculate viewport here maybe?
     const latLng = new google.maps.LatLng(coords[0], coords[1]);
     const marker = new google.maps.Marker({
@@ -74,7 +74,7 @@ $(function initializeMap () {
     (_index, select) => {
       db.then(db =>
         $(select).append(
-          db[select.dataset.type].map (
+          db[select.dataset.type].map(
             item => Object.assign(
               $(`<option>${item.name}</option>`)[0]
               , {
@@ -96,9 +96,9 @@ $(function initializeMap () {
         .find('option:selected')
         .each((_i, option) => {
           const item = option.item
-              , type = $(option)
-                  .closest('select')[0]
-                  .dataset.type
+            , type = $(option)
+              .closest('select')[0]
+              .dataset.type
 
           // Make a li out of this item
           const li = $(`<li>${item.name} <button class='del'>x</button></li>`)[0]
@@ -158,7 +158,7 @@ $(function initializeMap () {
       const $day = $(evt.target).closest('.day')
       if ($day.hasClass('current')) {
         const prev = $day.prev('.day')[0]
-            , next = $day.next('.day')[0]
+          , next = $day.next('.day')[0]
         $day.removeClass('current')
         $(prev || next).addClass('current')
       }
@@ -169,33 +169,49 @@ $(function initializeMap () {
     })
 
   // When we start, add a day
-  $('button.addDay').click()
-
+  // $('button.addDay').click()
 
 
 
 });
 
-$(function runMap() {
+$(function initializeDay() {
 
-$(document).on('click', 'button.addDay', function() {
-  $.ajax({
-  method: 'GET',
-  url: '/api/days'
-  })
-  .then(function (data) { console.log('GET response data: ', data) })
-  .catch(console.error.bind(console));
-
-  $.ajax({
-    method: 'POST',
-    url: '/api/days'
+  $(document).on('click', 'button.addDay', function () {
+    $.ajax({
+      method: 'GET',
+      url: '/api/days'
     })
-    .then(function (data) { console.log('POST response data: ', data) })
-    .catch(console.error.bind(console));
+      .then(function (data) { console.log('GET response data: ', data) })
+      .catch(console.error.bind(console));
 
-
+    $.ajax({
+      method: 'POST',
+      url: '/api/days'
+    })
+      .then(function (data) { console.log('POST response data: ', data) })
+      .catch(console.error.bind(console));
   });
+  $.ajax({
+    method: 'GET',
+    url: '/api/days'
+  })
+    .then(function (data) {
+      console.log(data)
+      if (data.length < 1) {
+        console.log('We made it to the IF!!!')
+        $.ajax({
+          method: 'POST',
+          url: '/api/days/1'
+        })
+          .then(function () { console.log('Day One now exists') })
+          .catch(console.error.bind(console));
 
+      }
+      else {
+
+      }
+    })
 
 
 
