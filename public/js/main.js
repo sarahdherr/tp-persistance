@@ -77,11 +77,11 @@ $(function initializeMap() {
     method: 'GET',
     url: '/api'
   })
-  .then((data) => {
-    console.log('**FETCH**', data);
-    return data;
-  })
-  .catch();
+    .then((data) => {
+      console.log('**FETCH**', data);
+      return data;
+    })
+    .catch();
 
   // TODO:
   // 1. Populate the <select>s with <option>s
@@ -123,6 +123,15 @@ $(function initializeMap() {
 
           // Add this item to our itinerary for the current day
           $('.current.day').append(li)
+          var currentDay = $('.current')[0].id
+          var currentDayUrl = "/api/days/" + currentDay + "/" + type;
+          var itemId = "id=" + item.id;
+          console.log(currentDayUrl)
+          $.ajax({
+            method: 'PUT',
+            data: itemId,
+            url: currentDayUrl
+          })
         })
   )
 
@@ -186,9 +195,9 @@ $(function initializeMap() {
         method: 'DELETE',
         url: dayUrl
       })
-      .then(function(message) {
-        console.log(message);
-      })
+        .then(function (message) {
+          console.log(message);
+        })
       numberDays()
     })
 
@@ -224,7 +233,7 @@ $(function initializeDay() {
           method: 'GET',
           url: '/api/days'
         })
-          .then(function(days) {
+          .then(function (days) {
             renderDays(days);
           })
       })

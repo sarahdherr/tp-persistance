@@ -12,7 +12,7 @@ var Day = db.model('day');
 
 router.get('/', function (req, res, next) {
 	// find all days
-	Day.findAll().then(function(days){
+	Day.findAll().then(function (days) {
 		res.send(days);
 	})
 
@@ -34,9 +34,9 @@ router.delete('/:number', function (req, res, next) {
 			number: req.params.number
 		}
 	})
-	.then(function(day) {
-		day.destroy();
-	})
+		.then(function (day) {
+			day.destroy();
+		})
 })
 
 router.post('/:number', function (req, res, next) {
@@ -44,15 +44,23 @@ router.post('/:number', function (req, res, next) {
 	Day.create({
 		number: req.params.number
 	})
-	.then(function(day) {
-		res.send(day);
-	})
+		.then(function (day) {
+			res.send(day);
+		})
 })
 
 
 // get attractions of that type for a specific day
-router.post('/:number/hotels', function (req, res, next) {
-
+router.put('/:number/hotels', function (req, res, next) {
+	Day.findOne({
+		where: {
+			number: req.params.number
+		}
+	})
+		.then(function (day) {
+			day.hotelId = req.body.id
+		})
+		.catch(next)
 })
 
 router.post('/:number/restaurants', function (req, res, next) {
